@@ -1,73 +1,14 @@
-<div class="row" >
-    <div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body ">
-            <h4 class="card-title text-primary">Mens</h4>
-            <p class="card-text">Men`s range. Hard wearing boots, jackets and clothing for unbeatable comfort day in , day out. Practical, easy-to-wear styles wherever you`re headed. </p>
-        </div>
-        <hr>
-        <div class="card-body">
-            <h4 class="card-title ">Clothing</h4>
-            <img id="s" src="/images/categories/mens-clothing-accessories.jpg" class="card-img-top img-thumbnail" alt="тут должна быть картинка">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, asperiores assumenda consectetur corporis dicta distinctio dolore dolores excepturi impedit maiores neque nulla numquam odio officiis quaerat qui tenetur totam voluptate.
-            </p>
-            <div class="infobtn col-md-4 col-lg-2">
-                <button class=" btn btn-outline-info btn-md btn-block">View products</button>
-            </div>
-        </div>
-            <hr>
-        <div class="card-body">
-            <h4 class="card-title">Accessories</h4>
-            <img id="s" src="/images/categories/mens-clothing-accessories.jpg" class=" card-img-top  img-thumbnail" alt="...">
-
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores deleniti, doloribus eveniet expedita explicabo, facere, facilis harum impedit ipsam iste quae quia repellendus! Culpa laboriosam laudantium necessitatibus repellendus sequi.
-                </p>
-                    <div class="infobtn col-md-4 col-lg-2">
-                        <button class=" btn btn-outline-info btn-md btn-block">View products</button>
-                    </div>
-        </div>
-
+<%- include ./header.ejs%>
+<!--<% _.each(subCategory.categories[catId].categories,function (doc) { %>-->
+<div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
+<div class="card-body">
+    <h4 class="card-title "><%= doc.name%></h4>
+    <img id="s" src="/images/<%= doc.image%>" class="card-img-top img-thumbnail" >
+    <p class="card-text"><%= doc.page_description%>
+    </p>
+    <div class="infobtn col-md-4 col-lg-2">
+        <a  href="/product-list/" class=" btn btn-outline-info btn-md btn-block">View products</a>
     </div>
 </div>
-
-<div class="row" >
-    <div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body ">
-            <h4 class="card-title text-primary ">Womens</h4>
-            <p class="card-text">Men`s range. Hard wearing boots, jackets and clothing for unbeatable comfort day in , day out. Practical, easy-to-wear styles wherever you`re headed. </p>
-
-            <hr>
-
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">Clothing</h4>
-        <img id="s" src="/images/categories/womens-clothing.jpg" class="card-img-top img-thumbnail " alt="тут должна быть картинка">
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, asperiores assumenda consectetur corporis dicta distinctio dolore dolores excepturi impedit maiores neque nulla numquam odio officiis quaerat qui tenetur totam voluptate.
-        </p>
-            <div class="infobtn col-md-4 col-lg-2">
-                <button class=" btn btn-outline-info btn-md btn-block">View products</button>
-            </div>
-        </div>
-            <hr>
-        <div class="card-body">
-        <h5 class="card-title">Jewelry</h5>
-            <img id="s" src="/images/categories/womens-jewelry.png" class=" card-img-top  img-thumbnail" alt="тут должна быть картинка">
-
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores deleniti, doloribus eveniet expedita explicabo, facere, facilis harum impedit ipsam iste quae quia repellendus! Culpa laboriosam laudantium necessitatibus repellendus sequi.
-            </p>
-                <div class="infobtn col-md-4 col-lg-2">
-                    <button class=" btn btn-outline-info btn-md btn-block">View products</button>
-                </div>
-        </div>
-        <hr>
-        <div class="card-body">
-            <h5 class="card-title">Accessories</h5>
-            <img id="s" src="/images/categories/womens-accessories.jpg" class=" card-img-top  img-thumbnail" alt="...">
-
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A asperiores deleniti, doloribus eveniet expedita explicabo, facere, facilis harum impedit ipsam iste quae quia repellendus! Culpa laboriosam laudantium necessitatibus repellendus sequi.
-            </p>
-                <div class="infobtn col-md-4 col-lg-2">
-                    <button class=" btn btn-outline-info btn-md btn-block">View products</button>
-                </div>
-        </div>
-    </div>
 </div>
+<% }) %>
