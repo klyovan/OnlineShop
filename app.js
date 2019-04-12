@@ -11,7 +11,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/categories', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/OSF', { useNewUrlParser: true });
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

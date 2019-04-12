@@ -9,9 +9,10 @@
 </head>
 <body>
 
-<% _.each(items.categories[0].categories, function (topC) { %>
 
-   <span> <%= topC.name %></span>
+<% _.each(items, function (docs) { %>
+
+   <span> <%= docs.price %></span>
 
 <% }) %>
 

@@ -1,13 +1,15 @@
 <%- include ./header.ejs%>
-<!--<% _.each(subCategory.categories[catId].categories,function (doc) { %>-->
-<div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
+<% _.each(subCategory.categories[catId].categories,function (doc) { %>
+<div id="or" class="cardSubC card border shadow p-3 mb-5 bg-white rounded">
 <div class="card-body">
     <h4 class="card-title "><%= doc.name%></h4>
+    <% if (doc.image){%>
     <img id="s" src="/images/<%= doc.image%>" class="card-img-top img-thumbnail" >
+        <% } %>
     <p class="card-text"><%= doc.page_description%>
     </p>
     <div class="infobtn col-md-4 col-lg-2">
-        <a  href="/product-list/" class=" btn btn-outline-info btn-md btn-block">View products</a>
+        <a  href="<%= subCategory.categories[catId].name%>/<%= doc.id%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
     </div>
 </div>
 </div>

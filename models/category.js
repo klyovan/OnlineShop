@@ -11,4 +11,4 @@ var schema = new Schema({
     c_showInMenu:{type:Boolean}
 });
 
-module.exports = mongoose.model('mainCategory', schema,'categories');
+module.exports = mongoose.model('Category', schema,'categories');//tut delal changes

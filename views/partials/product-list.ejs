@@ -1,28 +1,37 @@
 <%- include ./header.ejs%>
-<div class="card mb-3" style="max-width: 540px;">
+<div class="container">
+    <div class="row">
+<% _.each(products,function (items) { %>
+
+
+<div class="card  mb-3 col-md-6 shadow  bg-white rounded" style="margin-top: 10px;">
     <div class="row no-gutters">
         <div class="col-md-4">
-            <img src="\images\products\medium\70284588_100_0.jpg" class="card-img" alt="...">
+            <img src="/images/<%=items.image_groups[2].images[0].link %>" class="card-img" alt="...">
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title"><%= items.name%></h5>
+                <p class="card-text"><%= items.short_description%></p>
 
                 <div class="container">
                     <div class="row">
-                        <div class="prdbtn col- border">
-                            <span>$111</span>
+                        <div style="padding: 8px" class="prdbtn col- border shadow  bg-white rounded">
+                            <span><%= items.price%> $</span>
                         </div>
                         <div class="prdbtn col-">
-                            <a href="/product/1" class="btn btn-outline-dark btn-block ">View</a>
+                            <a href="product/<%= items.id%>" class="btn btn-outline-dark btn-block ">View</a>
                         </div>
                         <div class="prdbtn col- ">
-                            <button class="btn btn-outline-dark btn-block ">Add to cart</button>
+                            <a class="btn btn-outline-dark btn-block ">Add to cart</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<% }) %>
     </div>
 </div>

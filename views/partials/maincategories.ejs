@@ -1,9 +1,9 @@
 
 <div class="row" >
-    <div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
+    <div id="or" class="card cardSubC border shadow p-3 mb-5 bg-white rounded">
         <div class="card-body ">
-            <h4 class="card-title text-primary">Mens</h4>
-            <p class="card-text">Men`s range. Hard wearing boots, jackets and clothing for unbeatable comfort day in , day out. Practical, easy-to-wear styles wherever you`re headed. </p>
+            <h4 class="card-title text-primary"><%= mensC.name%></h4>
+            <p class="card-text"><%= mensC.page_description%> </p>
         </div>
         <hr>
         <% _.each(mensC.categories,function (topC) { %>
@@ -16,7 +16,7 @@
             <p class="card-text"><%= topC.page_description%>
             </p>
             <div class="infobtn col-md-4 col-lg-2">
-                <a  href="/category/Mens/<%= topC.name%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
+                <a  href="/category/<%= mensC.name%>/<%= topC.name%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
             </div>
         </div>
 
@@ -28,10 +28,10 @@
 </div>
 
 <div class="row" >
-    <div id="or" class="card border shadow p-3 mb-5 bg-white rounded">
+    <div id="or" class="card cardSubC border shadow p-3 mb-5 bg-white rounded">
         <div class="card-body ">
-            <h4 class="card-title text-primary ">Womens</h4>
-            <p class="card-text">Men`s range. Hard wearing boots, jackets and clothing for unbeatable comfort day in , day out. Practical, easy-to-wear styles wherever you`re headed. </p>
+            <h4 class="card-title text-primary "><%= womensC.name%></h4>
+            <p class="card-text"><%= womensC.page_description%> </p>
 
             <hr>
 
@@ -45,7 +45,7 @@
         <p class="card-text"><%= topC.page_description%>
         </p>
             <div class="infobtn col-md-4 col-lg-2">
-                <a href="/category/Womens/<%= topC.name%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
+                <a href="/category/<%= womensC.name%>/<%= topC.name%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
             </div>
         </div>
             <hr>
