@@ -10,11 +10,31 @@
 <body>
 
 
-<% _.each(items, function (docs) { %>
 
-   <span> <%= docs.price %></span>
+<div class="row ">
 
-<% }) %>
+    <div class="prdbtn col-">
+        <a class="btn btn-success btn-block ">Buy</a>
+    </div>
+    <div class="prdbtn col- ">
+        <a class="btn btn-danger btn-block ">Add to wishlist</a>
+    </div>
+    <div class="prdbtn col- border">
+        <span id="lol" style="padding: 5px;font-size:20px;">111</span>
+    </div>
+
+    <form action="/test/currency" method="post">
+        <select class="prdbtn" name="currency" id="currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="UAH">UAH</option>
+        </select>
+        <button type="submit"></button>
+    </form>
+</div>
+   <span> <%=selectedCurr  %></span>
+
+
 
 </body>
 </html>

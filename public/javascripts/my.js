@@ -7,4 +7,6 @@ var check = function() {
             document.getElementById('message').style.color = 'red';
             document.getElementById('message').innerHTML = 'not matching';
         }
-    }
+    };
+
+
