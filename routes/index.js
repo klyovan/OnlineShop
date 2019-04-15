@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var _         = require("underscore");
 var url = require('url');
 var request = require('request');
-
 var Category = require('../models/category');
 var Product = require ('../models/product');
 
@@ -22,7 +21,6 @@ router.get('/', function(req, res, next) {
     });
     });
 
-
 router.get('/category/:gender/:subC_Name/:prodListName',function (req, res) {
     var mainC = req.params.gender;
     var subcC = req.params.subC_Name;
@@ -31,7 +29,7 @@ router.get('/category/:gender/:subC_Name/:prodListName',function (req, res) {
     Product.find({'primary_category_id': listName},function (err,docs) {
         if(err) return console.log(err);
 
-        res.render('partials/product-list',{_     : _ ,title: "Product-list", products: docs,mainC: mainC, subC: subcC});
+        res.render('shop/product-list',{_     : _ ,title: "Product-list", products: docs,mainC: mainC, subC: subcC});
     });
 
 });
@@ -42,7 +40,7 @@ router.get('/category/:gender/:subC_Name/product/:id',function (req, res) {
     Product.find({'id': id},function (err,docs) {
         if(err) return console.log(err);
 
-        res.render('partials/product',{_     : _, title: "Product", products: docs})
+        res.render('shop/product',{_     : _, title: "Product", products: docs})
     });
 
 
@@ -86,7 +84,7 @@ router.get('/category/:sex/:id',function (req, res) {
             if(err) return console.log(err);
 
 
-            res.render('partials/subcategories',{_     : _,title: "Subcategory", subCategory: docs,catId: catId})
+            res.render('shop/subcategories',{_     : _,title: "Subcategory", subCategory: docs,catId: catId})
         });
     }
     else if (sex === "Womens"){
@@ -107,7 +105,7 @@ router.get('/category/:sex/:id',function (req, res) {
 
             if(err) return console.log(err);
 
-            res.render('partials/subcategories',{_     : _,title: "Subcategory", subCategory: docs, catId:catId})
+            res.render('shop/subcategories',{_     : _,title: "Subcategory", subCategory: docs, catId:catId})
         });
 
     }

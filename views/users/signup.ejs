@@ -14,12 +14,12 @@
 
 <%- include ../partials/header.ejs%>
 
-
 <div class="card bg-light">
+    <%- include ../partials/messages.ejs%>
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center">Sign up</h4>
         <p class="btn-google">
-            <a href="" class="btn btn-block text-white"> <i class="fab fa-google"></i>   Login via google</a>
+            <a href="/users/google" class="btn btn-block text-white"> <i class="fab fa-google"></i>   Login via google</a>
         </p>
         <p class="divider-text">
             <span class="bg-light">OR</span>
@@ -49,11 +49,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input id="password2"  class="form-control" placeholder="Repeat password" type="password" onkeyup='check();' required>
+                <input id="password2" name="password2"  class="form-control" placeholder="Repeat password" type="password" onkeyup='check();' required>
             </div> <!-- form-group// -->
             <span id='message'></span>
             <div class="form-group">
-                <input type="hidden" name="_csrf" value="">
                 <button type="submit" class="btn btn-primary btn-block"> Sign Up  </button>
 
             </div> <!-- form-group// -->

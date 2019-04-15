@@ -2,6 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var bcrypt = require('bcryptjs');
+var flash = require('connect-flash');
+var isLoggedIn = require('../config/auth').ensureAuthenticated;
+var User = require ('../models/user');
+var passportSetup = require('../config/passport');
+var randomstring = require('randomstring');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -9,20 +15,123 @@ router.get('/', function(req, res, next) {
 });
 
 
+
+router.get('/google',passport.authenticate('google',{
+  scope: ['profile']
+}));
+
+
+router.get('/auth/google/redirect',passport.authenticate('google',{failureRedirect: '/users/signup'}),  (err, req, res, next) => {
+    if (err.name === 'TokenError') {
+      res.redirect('/users/signup'); // redirect them back to the login page
+    } else {
+      // Handle other errors here
+    }
+  },
+      (req, res) => { // On success, redirect back to '/'
+        res.redirect('/users/profile');
+
+      }
+);
+
+
 router.get('/signup',function (req, res) {
-  res.render('users/signup',{title: "SignUp"})
+  if(req.isAuthenticated()){
+    res.redirect('/users/profile');
+  }else
+  res.render('users/signup',{title: "SignUp"});
 });
+
+
 router.post('/signup',function (req,res){
-  var array = [];
 
+  var messages = [];
+  console.log(req.body);
+  var {name,email,password,password2} = req.body;
+
+  if(password !== password2){
+    messages.push({msg: 'Passwords do not match'});
+  }
+
+  if(password.length < 8){
+    messages.push({msg: 'Password should be at least 8 characters'});
+  }
+
+  if (messages.length > 0 ){
+    res.render('users/signup',{title: "SignUp", messages:messages})
+  } else {
+    User.findOne({ email: email},function (err,user) {
+      if (err) {
+        return done(err);
+      }
+      if (user){
+        messages.push({msg: 'Email is already in use.'});
+         res.render('users/signup',{title: "SignUp", messages:messages});
+      }
+      else {
+
+      var newUser = new User({
+        name: name,
+        email: email,
+        password: password,
+        // secretToken: secretToken,
+        // active: active
+      });
+
+      bcrypt.genSalt(10,function (err,salt) {
+        bcrypt.hash(newUser.password,salt,function (err,hash) {
+          {
+            if (err) throw err;
+            //generate token for email verification
+
+
+          //set password to hashed
+            newUser.password = hash;
+
+
+          //save user
+            newUser.save()
+                .then(user => {
+
+                  req.flash('success_msg','You are now registered');
+                  res.redirect('/users/profile');
+                })
+                .catch(err => console.log(err));
+          }
+        })
+      })
+
+      }
+
+    })
+  }
 
 });
 
-router.get('/profle',function(){
-  res.render('users/profile');
+router.get('/profile',isLoggedIn,function(req,res){
+  res.render('users/profile',{title: "Prodile"});
 });
 
-router.get('/signin',function (req, res) {
+
+router.get('/signin',function (req, res, next) {
+  if (req.isAuthenticated()){
+    req.flash('error_msg','Bad request, you already logged in!');
+    res.redirect('/users/profile')}
   res.render('users/signin',{title: "SignIn"})
 });
+
+router.post('/signin',function(req,res,next){
+  passport.authenticate('local',{
+    successRedirect: '/users/profile',
+    failureRedirect: '/users/signin',
+    failureFlash: true
+  })(req,res,next);
+});
+
+router.get('/logout',function (req,res) {
+  req.logout();
+  req.flash('success_msg','You are logged out');
+  res.redirect('/users/signin');
+});
 module.exports = router;
+

@@ -18,7 +18,8 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017/OSF', { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
-//require('./config/passport');
+require('./config/passport')(passport);
+require('./config/passportG')(passport);
 
 
 //var aSecret = process.env.cookie;
@@ -30,11 +31,28 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(session());
+app.use(session({
+        secret: 'keyboard cat',
+        resave: true,
+        saveUninitialized: true
+}
+));
 
-//app.use(flash);
-//app.use(passport.initialize());
-//app.use(passport.session());
+//pasport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use(flash());
+
+//Global variables
+app.use(function (req,res,next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+});
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
