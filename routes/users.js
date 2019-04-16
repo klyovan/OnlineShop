@@ -8,6 +8,7 @@ var isLoggedIn = require('../config/auth').ensureAuthenticated;
 var User = require ('../models/user');
 var passportSetup = require('../config/passport');
 var randomstring = require('randomstring');
+var mailer = require('../misc/mailer');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -48,7 +49,7 @@ router.post('/signup',function (req,res){
   var messages = [];
   console.log(req.body);
   var {name,email,password,password2} = req.body;
-
+  var secretToken = randomstring.generate();
   if(password !== password2){
     messages.push({msg: 'Passwords do not match'});
   }
@@ -74,39 +75,51 @@ router.post('/signup',function (req,res){
         name: name,
         email: email,
         password: password,
-        // secretToken: secretToken,
-        // active: active
+         secretToken: secretToken,
+         active: false
       });
 
       bcrypt.genSalt(10,function (err,salt) {
         bcrypt.hash(newUser.password,salt,function (err,hash) {
           {
             if (err) throw err;
-            //generate token for email verification
-
 
           //set password to hashed
             newUser.password = hash;
 
-
-          //save user
             newUser.save()
                 .then(user => {
 
-                  req.flash('success_msg','You are now registered');
-                  res.redirect('/users/profile');
+                    //compose email
+                   var html = 'Hi there, <br/> thank you for registering<br><br>'+
+                       'Click on the button to confirm your account.' +
+                   '<form action="http://127.0.0.1:3000/users/verify?q='+ secretToken +'" method="post">\n' +
+                       '<button type="submit" >Go</button >\n' +
+                       '</form> '+
+                  '<br> Have a nice day :)';
+                   //send email
+                  var mailOptions = {
+    from: 'OSF-Support ',
+    to: 'klyovan88@gmail.com', //TODO change on req.bode.email
+    subject: 'Verification',
+    html: html
+};
+                     mailer.sendMail(mailOptions,function (err,data) {
+                       if (err) console.log(err);
+                       else console.log(data);
+                     });
+
+                  req.flash('success_msg','Please check your email!');
+                  res.redirect('/users/signin');
                 })
                 .catch(err => console.log(err));
-          }
-        })
-      })
-
-      }
-
-    })
-  }
-
-});
+                      }
+                  })
+              })
+             }
+          })
+        }
+    });
 
 router.get('/profile',isLoggedIn,function(req,res){
   res.render('users/profile',{title: "Prodile"});
@@ -128,10 +141,37 @@ router.post('/signin',function(req,res,next){
   })(req,res,next);
 });
 
+
+
+router.post('/verify',function (req,res,next) {
+  var secretToken = req.query.q;
+
+  //find acc that mathces the secret token
+  var user = User.findOneAndUpdate({'secretToken':secretToken},{$set:{active : true ,secretToken : ''}},{new:true},function (err,doc) {
+    if (err) {
+      console.log("Something wrong when updating data!");
+    }
+
+    console.log(doc );
+
+  });
+  var userConfirm =User.findOne({'secretToken':secretToken});
+  if (!userConfirm){
+    req.flash('error_msg','No user find!');
+    res.redirect('/users/verify');
+  }
+
+  req.flash('success_msg','Thanks, now you may login.');
+  res.redirect('/users/signin');
+
+});
+
+
 router.get('/logout',function (req,res) {
   req.logout();
   req.flash('success_msg','You are logged out');
   res.redirect('/users/signin');
 });
+
 module.exports = router;
 

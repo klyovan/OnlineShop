@@ -54,15 +54,30 @@ module.exports = function (passport) {
                   if (!user){
                       return done(null,false,{message: 'That email is not registered'})
                   }
+
+
+
                   //match password
                   bcrypt.compare(password, user.password,function (err, Match) {
                     if (err) throw err;
 
-                    if (Match){
-                        return done(null,user);
-                    } else {
-                        return done(null,false,{message: 'Password incorrect'})
+                    if(!Match){
+                        return done(null,false,{message: 'Password incorrect'});
+
                     }
+
+                    if (!user.active){
+                        return done(null,false,{message: 'You need verify email first'});
+                    }
+
+                      return done(null,user);
+
+                    // if (Match){
+                    //     return done(null,user);
+                    // } else {
+                    //
+                    //     return done(null,false,{message: 'Password incorrect'})
+                    // }
                   });
               })
               .catch(function (err) {

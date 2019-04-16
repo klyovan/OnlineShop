@@ -6,9 +6,9 @@ var userSchema = new Schema({
     name: {type: String, required: true},
     email:  String,
     password: String,
-    googleID: String
-    // secretToken: String,
-    // active: Boolean
+    googleID: String,
+     secretToken: String,
+     active: Boolean
 });
 
 
