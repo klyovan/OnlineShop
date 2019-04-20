@@ -11,6 +11,15 @@
   /*padding-right: 150px;*/
 /*}*/
 
+#cartCount{
+  font-size: 12px;
+  background: #ffa500;
+  color: #fff;
+  padding:  5px;
+  margin-bottom: 12px;
+
+
+}
 
 .cardSubC{
 

@@ -25,15 +25,25 @@
         </div>
         <div class="col">
 
-            <a href="#"><i class="fas fa-shopping-cart fa-2x"></i></a>
+            <a href="/cart"><i class="fas fa-shopping-cart fa-2x"></i></a>
         </div>
+        <% if(session.cart){%>
+            <span class="badge pull-top" id="cartCount"><%= session.cart.totalQty%></span>
+        <%}%>
+
+        <div class="col">
+            <!--<a href="/wishlist"><i class="fa fa-heart fa-2x" aria-hidden="true"></i></a>-->
+
+        </div>
+
+
     </div>
     <div class="row">
         <div class="col">
-            <a href="#" >Mens</a>
+            <a href="#mens"  >Mens</a>
         </div>
         <div class="col ">
-            <a href="#" >Womens</a>
+            <a href="#womens" >Womens</a>
         </div>
     </div>
     <form class="form-inline">

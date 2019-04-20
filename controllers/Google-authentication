@@ -1,0 +1,34 @@
+var _         = require("underscore");
+
+var express = require('express');
+var router = express.Router();
+var mongoose = require('mongoose');
+var passport = require('passport');
+var bcrypt = require('bcryptjs');
+var flash = require('connect-flash');
+var isLoggedIn = require('../config/auth').ensureAuthenticated;
+var User = require ('../models/user');
+var passportSetup = require('../config/passportG');
+var randomstring = require('randomstring');
+var mailer = require('../misc/mailer');
+
+// var passportSetup = require('../config/passport');
+// var passport = require('passport');
+
+module.exports.getProfile  = passport.authenticate('google',{
+    scope: ['https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email']
+});
+
+module.exports.redirectG  = passport.authenticate('google',{failureRedirect: '/users/signup'}),  (err, req, res, next) => {
+    if (err.name === 'TokenError') {
+        res.redirect('/users/signup'); // redirect them back to the login page
+    } else {
+        // Handle other errors here
+    }
+},
+    (req, res) => { // On success, redirect back to '/'
+    console.log('Good');
+        res.redirect('/users/profile');
+
+    };

@@ -1,6 +1,5 @@
 var nodemailler = require('nodemailer');
 var config = require('../config/mailer');
-var xouath2 = require('xoauth2');
 
 
 
@@ -16,11 +15,3 @@ var transporter = nodemailler.createTransport({
            }});
 
 module.exports = transporter;
-
-
-
-
-
-
-
-

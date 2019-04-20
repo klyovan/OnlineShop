@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth20');
 var keys = require('./keys');
 
+
 var User = require('../models/user');
 
 passport.serializeUser(function (user, done) {
@@ -32,7 +33,8 @@ module.exports = function (passport) {
                     }else{
                         new User ({
                             name: profile.displayName,
-                            googleID: profile.id
+                            googleID: profile.id,
+                            email: profile.emails[0].value
                         }).save()
                             .then((newUser)=>{
                                 //       console.log("new user created" + newUser);

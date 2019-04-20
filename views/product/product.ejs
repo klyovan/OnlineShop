@@ -9,12 +9,16 @@
                 <div class="carousel-item active">
                     <img src="\images\<%=items.image_groups[0].images[0].link%>" class="d-block w-100" alt="...">
                 </div>
+                <%if(items.image_groups[0].images[1]){%>
                 <div class="carousel-item">
-                    <img src="\images\<%=items.image_groups[0].images[0].link%>" class="d-block w-100" alt="...">
+                    <img src="\images\<%=items.image_groups[0].images[1].link%>" class="d-block w-100" alt="...">
                 </div>
+                <%}%>
+                <%if(items.image_groups[0].images[2]){%>
                 <div class="carousel-item">
-                    <img src="\images\<%=items.image_groups[0].images[0].link%>" class="d-block w-100" alt="...">
+                    <img src="\images\<%=items.image_groups[0].images[2].link%>" class="d-block w-100" alt="...">
                 </div>
+                <%}%>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -83,10 +87,10 @@
                     <div class="row ">
 
                         <div class="prdbtn col-">
-                            <a class="btn btn-success btn-block ">Buy</a>
+                            <a href="/add-to-cart/<%= items.id%>" class="btn btn-success btn-block ">Buy</a>
                         </div>
                         <div class="prdbtn col- ">
-                            <a class="btn btn-danger btn-block ">Add to wishlist</a>
+                            <a  href="/add-to-wishlist/<%= items.id%>" class="btn btn-danger btn-block ">Add to wishlist</a>
                         </div>
                         <div class="prdbtn col- border">
                             <span  id="price"  style="padding: 5px;font-size:20px;"><%= items.price%></span>
@@ -119,7 +123,7 @@
 
     $(document).ready(function($){
 
-        url= '/test/currency?q=<%=items.price%>'
+        url= '/product/test/currency?q=<%=items.price%>'
         $("#currency").change(function(){
             var selectedCurrency = $(this).children("option:selected").val();
            var  data = {currency: selectedCurrency}

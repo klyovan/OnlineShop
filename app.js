@@ -7,17 +7,20 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
-// var expressLayouts = require('express-ejs-layouts');
+var MongoStore = require('connect-mongo')(session);
 
 
-var indexRouter = require('./routes/index');
+var categoryRouter = require('./routes/categories');
 var usersRouter = require('./routes/users');
+var productRouter = require('./routes/products');
+var IndexRouter = require('./routes/index');
 
 var app = express();
 
 mongoose.connect('mongodb://localhost:27017/OSF', { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
+
 require('./config/passport')(passport);
 require('./config/passportG')(passport);
 
@@ -34,7 +37,9 @@ app.use(cookieParser());
 app.use(session({
         secret: 'keyboard cat',
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
+        cookie: { maxAge: 120 * 60 * 100 }
 }
 ));
 
@@ -50,6 +55,9 @@ app.use(function (req,res,next) {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
+
+    res.locals.session = req.session;
+
     next();
 });
 
@@ -58,8 +66,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(expressLayouts);
 
-app.use('/', indexRouter);
+app.use('/', IndexRouter);
+app.use('/category', categoryRouter);
+app.use('/product',productRouter);
 app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

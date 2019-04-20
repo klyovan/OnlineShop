@@ -1,0 +1,40 @@
+<%- include ../partials/header.ejs%>
+
+<div class="row">
+
+        <table class="table table-striped   " style="margin: 0 auto;">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+
+                <th scope="col">Price</th>
+                <th scope="col">Add to cart</th>
+                <th scope="col">Delete</th>
+
+            </tr>
+            </thead>
+            <% if (products){%>
+                <tbody>
+
+                <% _.each(products,function (items) { %>
+                    <tr>
+
+                        <td ><img <% if (items.item.image_groups[4]){%>src="/images/<%= items.item.image_groups[4].images[0].link%>"<% }%> alt=""></td>
+
+                        <td><a href="/product/product/<%=items.item.id%>"><%= items.item.name%></a></td>
+
+                        <td style="color:red;">USD <%= items.item.price%></td>
+                        <td><a href="/add-to-cart/<%=items.item.id%>"><i class="fas fa-shopping-cart"></i></a></td>
+                        <td><a href="/removeWish/<%=items.item.id%>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                    </tr>
+                <% }); %>
+
+                </tbody>
+            <% }%>
+        </table>
+
+
+</div>
+
+

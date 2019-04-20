@@ -1,0 +1,21 @@
+var express = require('express');
+var router = express.Router();
+
+
+var currency = require('../controllers/currency-api');
+
+var product_list = require('../controllers/product-list');
+
+var product = require('../controllers/product');
+
+
+router.get('/:prodListName',product_list.product_list);
+
+router.get('/product/:id',product.product);
+
+
+
+router.post('/test/currency',currency.currency);
+
+module.exports = router;
+
