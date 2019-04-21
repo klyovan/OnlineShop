@@ -8,6 +8,8 @@ var Product = require ('../models/product');
 
 var mailer = require('../misc/mailer');
 
+
+
 module.exports.product  = function (req, res) {
     var id = req.params.id;
 
@@ -36,7 +38,6 @@ module.exports.addToCart = function (req,res) {
        }
        cart.add(product,productId);
        req.session.cart = cart;
-       console.log(req.session.cart);
        res.redirect('/cart');
 
     });
@@ -81,7 +82,7 @@ module.exports.reduce = function (req, res,next) {
 module.exports.addToWishlist = function (req,res) {
     var productId = req.params.id;
     var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {  }); // ternary expression
-    if(req.isAuthenticated()) {
+
         Product.findOne({'id': productId}, function (err, product) {
             if (err) {
                 return res.redirect('/');
@@ -103,30 +104,25 @@ module.exports.addToWishlist = function (req,res) {
             };
             mailer.sendMail(mailOptions, function (err, data) {
                 if (err) console.log(err);
-                else console.log(data);
             });
-            console.log(req.session.wishlist);
             res.redirect('/wishlist');
 
 
         });
-    }else {
-        res.redirect('/users/profile');
-    }
 };
 
 module.exports.wishlist = function (req,res) {
-    if(req.isAuthenticated()) {
+
         if (!req.session.wishlist) {
             return res.render('wishlist/wishlist', {title: "Wishlist", products: null})
         }
         var wishlist = new Wishlist(req.session.wishlist);
-        res.render('wishlist/wishlist', {_: _, title: "Wishlist", products: wishlist.generateArray()})
-    }else res.redirect('/')
+        res.render('wishlist/wishlist', {_     : _, title: "Wishlist", products: wishlist.generateArray()})
+
     };
 
 
-module.exports.removeWishlistItem = function (req, res,next) {
+module.exports.removeWishlistItem = function (req, res) {
     var productId = req.params.id;
     var wishlist = new Wishlist(req.session.wishlist ? req.session.wishlist : {});
 
@@ -134,3 +130,28 @@ module.exports.removeWishlistItem = function (req, res,next) {
     req.session.wishlist = wishlist;
     res.redirect('/wishlist');
 };
+
+module.exports.search = function (req, res) {
+    if (req.query.search) {
+        var regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Product.find({ "name": regex }, function(err, foundproducts) {
+            if(err) {
+                console.log(err);
+            } else {
+                res.render("product/search-result", {_: _,title: 'Search results', products: foundproducts });
+            }
+        });
+    }
+
+
+};
+
+/**
+ * This function escape Regex, runs replace on text param
+ * @param text
+ * @returns regex
+ *
+ */
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}

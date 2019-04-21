@@ -12,8 +12,6 @@ module.exports.verify  = function (req,res,next) {
             console.log("Something wrong when updating data!");
         }
 
-        console.log(doc );
-
     });
 
     var userConfirm =User.findOne({'secretToken':secretToken});

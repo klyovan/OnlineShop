@@ -19,7 +19,7 @@
         <% _.each(products,function (items) { %>
     <tr>
 
-        <td ><img <% if (items.item.image_groups[4]){%>src="/images/<%= items.item.image_groups[4].images[0].link%>"<% }%> alt=""></td>
+        <td ><img width="56" height="90" <% if (items.item.image_groups[4]){%>src="/images/<%= items.item.image_groups[4].images[0].link%>"<% }%> alt=""></td>
 
         <td><a href="/product/product/<%=items.item.id%>"><%= items.item.name%></a></td>
         <td>
@@ -42,11 +42,26 @@
     <div class="col ">
     <div class="container">
         <div class="row align-items-start">
-<h6 class="col-md-8 float-right" style="margin-right: 5px"><b>Total price: $<%=totalPrice%></b></h6>
+<h6 class="col-md-8 float-right" id="totalPrice" style="margin-right: 5px"><b>Total price: $<%=totalPrice%></b></h6>
         </div>
         <div class="row align-itens-end">
-            <a href="#" type="button" class="btn btn-warning btn-md">Checkout</a>
+
+        <form action="/checkout" method="post">
+            <script src="https://checkout.stripe.com/checkout.js"
+                class = "stripe-button"
+                data-key = "pk_test_71qZSrcrjWv8jiHrF2l5YCGB00lC2LlcTR"
+                data-amount =  "<%=totalPrice * 100%>"
+                data-name = "Pay"
+                data-description = "Fill it"
+                data-local = "auto"
+                data-currency = "usd"
+                data-label = "Checkout"
+            >
+            </script>
+
+        </form>
         </div>
+
     </div>
     </div>
     <% }%>

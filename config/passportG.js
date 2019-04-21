@@ -28,7 +28,7 @@ module.exports = function (passport) {
                 User.findOne({googleID:profile.id}).then(function (currentUser) {
                     //if exist
                     if(currentUser){
-                        // console.log('user is ',currentUser)
+
                         done(null,currentUser);
                     }else{
                         new User ({
@@ -37,7 +37,6 @@ module.exports = function (passport) {
                             email: profile.emails[0].value
                         }).save()
                             .then((newUser)=>{
-                                //       console.log("new user created" + newUser);
                                 done(null,newUser);
                             })}
                 });

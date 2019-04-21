@@ -20,12 +20,15 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input name="password" class="form-control" value="<%= user.email%>" placeholder="Enter password" type="email" required readonly>
+                <input  class="form-control" value="<%= user.email%>" placeholder="Enter password" type="email" required readonly>
             </div> <!-- form-group// -->
+        <div class="form-group">
+            <a href="/users/orders" class="btn btn-secondary btn-block"> Orders  </a>
+        </div>
         <a href="/cart"><i class="fas fa-shopping-cart fa-2x"></i></a>
         <a style="margin-left: 170px" href="/wishlist"><i class="fa fa-heart fa-2x" aria-hidden="true"></i></a>
             <div class="form-group">
-                <a href="/users/logout" class="btn btn-primary btn-block"> Logout  </a>
+                <a href="/users/logout" class="btn btn-danger btn-block"> Logout  </a>
             </div> <!-- form-group// -->
 
 

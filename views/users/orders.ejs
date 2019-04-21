@@ -1,0 +1,24 @@
+<%- include ../partials/header.ejs%>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>My Orders</h2>
+        <% _.each(orders,function (order) { %>
+        <div  style="margin-left: 400px" class="card border shadow p-3 mb-5 bg-white rounded">
+            <h5 style="margin-left: 200px">Order</h5>
+            <div class="card-body">
+                <ul class="list-group">
+                    <% _.each(order.items,function (details) {%>
+                    <li class="list-group-item">
+                        <span class="badge">$<%= details.price%></span>
+                        <%= details.item.name%> | <%=details.qty%> Units
+                    </li>
+                        <%})%>
+                </ul>
+            </div>
+            <hr>
+                <strong>Total Price: $<%= order.cart.totalPrice%></strong>
+            <hr>
+        </div>
+        <%})%>
+    </div>
+</div>

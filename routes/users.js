@@ -31,7 +31,6 @@ router.get('/auth/google/redirect',passport.authenticate('google',{failureRedire
         }
     },
     (req, res) => { // On success, redirect back to '/'
-        console.log('Good');
         res.redirect('/users/profile');
 
     });
@@ -50,5 +49,6 @@ router.post('/verify',mailConfirm.verify);
 
 router.get('/logout',isLoggedIn,signIn.logout);
 
+router.get('/orders',isLoggedIn,signIn.orders);
 module.exports = router;
 

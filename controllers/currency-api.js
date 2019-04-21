@@ -14,7 +14,7 @@ module.exports.currency = function (req,res) {
         var value = Object.values(currency)[0];
 
 
-        // console.log("lol");
+
 
         res.send({value,price});
     });

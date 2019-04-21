@@ -28,7 +28,6 @@ module.exports.redirectG  = passport.authenticate('google',{failureRedirect: '/u
     }
 },
     (req, res) => { // On success, redirect back to '/'
-    console.log('Good');
         res.redirect('/users/profile');
 
     };

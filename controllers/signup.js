@@ -10,6 +10,7 @@ var User = require ('../models/user');
 
 module.exports.getSignup  = function (req, res) {
     if(req.isAuthenticated()){
+        //req.flash('error_msg','Bad request, you already logged in!');
         res.redirect('/users/profile');
     }else
         res.render('users/signup',{title: "SignUp"});
@@ -20,7 +21,6 @@ module.exports.getSignup  = function (req, res) {
 module.exports.postSignup  = function (req,res){
 
     var messages = [];
-    console.log(req.body);
     var {name,email,password,password2} = req.body;
     var secretToken = randomstring.generate();
     if(password !== password2){
