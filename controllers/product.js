@@ -1,20 +1,30 @@
 var _         = require("underscore");
+var mailer = require('../misc/mailer');
+
 
 var Cart = require('../models/cart');
-
 var Wishlist = require('../models/wishlist');
-
 var Product = require ('../models/product');
+var ViewedProducts = require ('../models/viewedProducts');
 
-var mailer = require('../misc/mailer');
+
 
 
 
 module.exports.product  = function (req, res) {
     var id = req.params.id;
 
-    Product.find({'id': id},function (err,docs) {
+    var viewedProducts = new ViewedProducts(req.session.viewedProducts ? req.session.viewedProducts : {  });
+
+
+    Product.find({'id': id},function (err,docs) { //здесь прописать add to viewed items
         if(err) return console.log(err);
+
+        viewedProducts.add(docs,id);
+
+        req.session.viewedProducts = viewedProducts;
+
+
 
         res.render('product/product',{_     : _, title: "Product", products: docs})
     });
@@ -43,26 +53,31 @@ module.exports.addToCart = function (req,res) {
     });
 };
 
+
 /**
  * rendering cart view
  */
+
 module.exports.cart = function (req,res) {
  if(!req.session.cart){
      return res.render('shopping-cart/cart',{title: "Cart",products: null})
  }
     var cart = new Cart(req.session.cart);
+
+
  res.render('shopping-cart/cart',{_     : _, title: "Cart", products: cart.generateArray(), totalPrice: cart.totalPrice})
 };
+
 
 
 /**
  * remove item from cart list
  */
-module.exports.remove = function (req, res,next) {
+module.exports.remove = function (req, res, next) {
     var productId = req.params.id;
     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    cart.removeItem(productId); //
+    cart.removeItem(productId);
     req.session.cart = cart;
     res.redirect('/cart');
 };

@@ -50,5 +50,14 @@ router.post('/verify',mailConfirm.verify);
 router.get('/logout',isLoggedIn,signIn.logout);
 
 router.get('/orders',isLoggedIn,signIn.orders);
+
+router.get('/forgot',signIn.getForgot);
+
+router.post('/forgot',signIn.postForgot);
+
+router.get('/reset/:token',signIn.getReset);
+
+router.post('/reset/:token',signIn.postReset);
+
 module.exports = router;
 

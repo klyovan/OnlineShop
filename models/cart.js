@@ -40,6 +40,8 @@ module.exports = function Cart(oldCart) {
         for (var id in this.items) {
             arr.push(this.items[id]);
         }
+
         return arr;
     };
 };
+

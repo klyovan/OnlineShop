@@ -1,6 +1,13 @@
+
+
 <%- include ../partials/header.ejs%>
 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.2&appId=352487835387376&autoLogAppEvents=1"></script>
+
 <% _.each(products,function (items) { %>
+
+    <div data-recently-view="<%= items.id%>"></div>
 <div class="card mb-3 cardSubC shadow  bg-white rounded" style="max-width: 1200px; margin-top: 50px">
     <div class="row no-gutters">
         <div class="col-md-4">
@@ -43,7 +50,7 @@
                     <div class="row ">
                         <div class="row">
                         <div class=" col-md-8 ">
-                            <h6 style="text-align: center; display: inline">Color:</h6>
+                            <h6 style="text-align: center; display: inline-block">Color:</h6>
                             <% if(items.variation_attributes[0]){%>
                                 <select name="" id="">
                                 <% _.each(items.variation_attributes[0].values,function (items) { %>
@@ -104,12 +111,20 @@
                         </select>
                         <span id="textbox"></span>
                     </div>
+
                 </div>
+                        <div style="margin-top: 45px" class="fb-like" data-href="" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true">
+
+                        </div>
             </div>
         </div>
         </div>
     </div>
+
+
 </div>
+
+
 
 <script>
 

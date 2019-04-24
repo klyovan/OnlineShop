@@ -1,0 +1,10 @@
+<div class="card-body" style="text-align: center">
+    <h4 style="text-align: center">Recently viewed</h4>
+<% if (viewed){ %>
+    <% _.each(viewed,function (viewedItems) { %>
+    <a  href="/product/product/<%= viewedItems.item[0].id%>" class="btn btn-info btn-md"><%= viewedItems.item[0].name%></a>
+
+    <%})%>
+
+<%}%>
+</div>

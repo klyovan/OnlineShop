@@ -8,24 +8,8 @@ module.exports = function Wishlist(oldWishlist) {
         if (!storedItem) {
             storedItem = this.items[id] = {item: item, price: 0}; //
         }
-        //storedItem.qty++;
-        //storedItem.price = storedItem.item.price * storedItem.qty;
-        //this.totalQty++;
-        //this.totalPrice += storedItem.item.price;
     };
 
-    // this.removeOne = function (id) {
-    //     this.items[id].qty--;
-    //     this.items[id].price -= this.items[id].item.price;
-    //     this.totalQty--;
-    //     this.totalPrice -= this.items[id].item.price;
-    //     var roundedString = this.totalPrice.toFixed(2);
-    //     this.totalPrice = Number(roundedString);
-    //
-    //     if (this.items[id].qty <= 0){
-    //         delete this.items[id];
-    //     }
-    // };
 
 
     this.removeItem  = function (id) {

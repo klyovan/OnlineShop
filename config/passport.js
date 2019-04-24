@@ -69,13 +69,6 @@ module.exports = function (passport) {
                     }
 
                       return done(null,user);
-
-                    // if (Match){
-                    //     return done(null,user);
-                    // } else {
-                    //
-                    //     return done(null,false,{message: 'Password incorrect'})
-                    // }
                   });
               })
               .catch(function (err) {
