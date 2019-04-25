@@ -5,7 +5,7 @@ module.exports = function viewedItems(oldViewedItems) {
     this.add = function(item, id) {
         var storedItem = this.items[id];
         if (!storedItem) {
-            storedItem = this.items[id] = {item: item, price: 0};
+             this.items[id] = {item: item};
         }
     };
 

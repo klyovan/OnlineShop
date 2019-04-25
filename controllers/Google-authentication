@@ -12,8 +12,6 @@ var passportSetup = require('../config/passportG');
 var randomstring = require('randomstring');
 var mailer = require('../misc/mailer');
 
-// var passportSetup = require('../config/passport');
-// var passport = require('passport');
 
 module.exports.getProfile  = passport.authenticate('google',{
     scope: ['https://www.googleapis.com/auth/userinfo.profile',

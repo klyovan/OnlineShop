@@ -29,17 +29,7 @@ module.exports.postSignIn  = function(req,res,next){
 };
 
 module.exports.profile = function(req,res){
-    if (!req.session.viewedProducts){
-        res.render('users/profile',{_     : _, title: "Profile",user: req.user,viewed: null});
-    }
-
-
-    var viewedProducts = new ViewedProducts(req.session.viewedProducts);
-
-
-
-    res.render('users/profile',{_     : _, title: "Profile",user: req.user, viewed: viewedProducts.generateArray()});
-
+    res.render('users/profile',{_     : _, title: "Profile",user: req.user});
 };
 
 module.exports.orders = function(req,res){
@@ -180,3 +170,12 @@ module.exports.postReset = function(req, res) {
             });
     };
 
+
+module.exports.google =
+
+    function (req,res) {
+        req.session.cart = null;
+        req.logout();
+        req.flash('success_msg','You are logged out');
+        res.redirect('/users/signin');
+    };

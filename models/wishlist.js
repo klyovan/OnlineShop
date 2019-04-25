@@ -1,7 +1,6 @@
 module.exports = function Wishlist(oldWishlist) {
     this.items = oldWishlist.items || {};
-    //this.totalQty = oldWishlist.totalQty || 0;
-    //this.totalPrice = oldWishlist.totalPrice || 0;
+
 
     this.add = function(item, id) {
         var storedItem = this.items[id];

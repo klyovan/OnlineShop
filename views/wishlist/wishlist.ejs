@@ -20,7 +20,7 @@
                 <% _.each(products,function (items) { %>
                     <tr>
 
-                        <td ><img width="56" height="90" <% if (items.item.image_groups[4]){%>src="/images/<%= items.item.image_groups[4].images[0].link%>"<% }%> alt=""></td>
+                        <td ><img width="90" height="90" <% if (items.item.image_groups[4]){%>src="/images/<%= items.item.image_groups[4].images[0].link%>"<% }%> alt=""></td>
 
                         <td><a href="/product/product/<%=items.item.id%>"><%= items.item.name%></a></td>
 

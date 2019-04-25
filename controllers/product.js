@@ -10,7 +10,6 @@ var ViewedProducts = require ('../models/viewedProducts');
 
 
 
-
 module.exports.product  = function (req, res) {
     var id = req.params.id;
 
@@ -22,13 +21,13 @@ module.exports.product  = function (req, res) {
 
         viewedProducts.add(docs,id);
 
-        req.session.viewedProducts = viewedProducts;
+         req.session.viewedProducts = viewedProducts;
 
 
 
-        res.render('product/product',{_     : _, title: "Product", products: docs})
+
+        res.render('product/product',{_     : _, title: "Product", products: docs, viewed: viewedProducts.generateArray()})
     });
-
 
 };
 
