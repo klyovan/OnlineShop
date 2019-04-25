@@ -1,0 +1,30 @@
+
+<%if (title === 'Woman'){ %>
+    <%- include ../partials/header.ejs%>
+    <%}%>
+<div class="row" >
+    <div id="or" class="card cardSubC border shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body ">
+            <h4 class="card-title text-primary "><%= womensC.name%></h4>
+            <p class="card-text"><%= womensC.page_description%> </p>
+
+            <hr>
+
+        </div>
+        <% _.each(womensC.categories,function (topC) { %>
+            <div class="card-body">
+                <h4 class="card-title"><%= topC.name%></h4>
+                <% if (topC.image){%>
+                <img id="s" src="/images/<%=topC.image %>" class="card-img-top img-thumbnail " >
+                <%}%>
+                <p class="card-text"><%= topC.page_description%>
+                </p>
+                <div class="infobtn col-md-4 col-lg-2">
+                    <a href="/category/<%= womensC.name%>/<%= topC.name%>" class=" btn btn-outline-info btn-md btn-block">View products</a>
+                </div>
+            </div>
+            <hr>
+        <% }) %>
+        <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+    </div>
+</div>

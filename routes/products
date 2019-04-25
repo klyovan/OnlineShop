@@ -13,6 +13,8 @@ router.get('/:prodListName',product_list.product_list);
 
 router.get('/product/:id',product.product);
 
+router.post('/newReview',product.postReview);
+
 
 router.post('/test/currency',currency.currency);
 

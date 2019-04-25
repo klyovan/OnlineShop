@@ -1,0 +1,27 @@
+<%if(reviews.length>=1){%>
+    <h3>Reviews</h3>
+    <% _.each(reviews,function (review) { %>
+    <div class="card" style="max-width: 500px;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                </div>
+                <div class="col-md-10">
+                    <p>
+                        <span class="float-left" ><strong><%=review.reviewer%></strong></span>
+                        <%- include ../product/stars.ejs%>
+
+
+
+                    </p>
+                    <div class="clearfix"></div>
+                    <p><%= review.reviewText%></p>
+
+                </div>
+            </div></div></div>
+    <%})%>
+<%}else{%>
+
+    <h5>No reviews yet</h5>
+<%}%>

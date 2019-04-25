@@ -5,8 +5,9 @@ var mailer = require('../misc/mailer');
 var Cart = require('../models/cart');
 var Wishlist = require('../models/wishlist');
 var Product = require ('../models/product');
+var Review = require ('../models/review');
 var ViewedProducts = require ('../models/viewedProducts');
-
+var Review = require('../models/review');
 
 
 
@@ -23,10 +24,13 @@ module.exports.product  = function (req, res) {
 
          req.session.viewedProducts = viewedProducts;
 
+         Review.find({'productId':id},function (err,reviews) {
+             if(err) return console.log(err);
 
+             res.render('product/product',{_     : _, title: "Product", products: docs, viewed: viewedProducts.generateArray(),reviews: reviews})
 
+         });
 
-        res.render('product/product',{_     : _, title: "Product", products: docs, viewed: viewedProducts.generateArray()})
     });
 
 };
@@ -169,3 +173,31 @@ module.exports.search = function (req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+
+module.exports.postReview = function (req,res) {
+    var {selected_rating, name, comment, idp} = req.body;
+
+
+    var newReview = new Review({
+        reviewer: name,
+        stars: selected_rating,
+        reviewText: comment,
+        productId: idp
+
+    });
+
+
+        if (comment.length <4){
+             req.flash('error_msg','Review must contain at least 4 characters !');
+            res.redirect('/product/product/' + idp);
+        }else if(selected_rating === ''){
+            req.flash('error_msg','Rate it on a scale of 5 stars, when add new review!');
+            res.redirect('/product/product/' + idp);
+        } else {
+
+            newReview.save();
+            res.redirect('/product/product/' + idp);
+        }
+
+};

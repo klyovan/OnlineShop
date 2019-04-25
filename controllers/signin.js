@@ -37,6 +37,7 @@ module.exports.orders = function(req,res){
         if (err){
             console.log(err);
         }
+
         var cart;
         orders.forEach(function (order) {
             cart = new Cart(order.cart);

@@ -1,6 +1,7 @@
 
-
 <%- include ../partials/header.ejs%>
+
+<%- include ../partials/messages.ejs%>
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.2&appId=352487835387376&autoLogAppEvents=1"></script>
@@ -122,8 +123,18 @@
     </div>
 
 </div>
-
+    <hr>
     <%- include ../users/viewedProducts.ejs%>
+    <hr>
+    <%- include ../product/add-review.ejs%>
+
+
+
+    <%- include ../product/reviews.ejs%>
+
+    <%- include ../partials/footer.ejs%>
+
+
 
 <script>
 

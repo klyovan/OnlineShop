@@ -16,7 +16,7 @@ module.exports = function viewedItems(oldViewedItems) {
         for (var id in this.items) {
             arr.push(this.items[id]);
         }
-       slicedArr = arr.slice(0,6);
+       slicedArr = arr.slice(0,5);
         return slicedArr;
     };
 };
