@@ -1,21 +1,67 @@
+/**
+ * express module
+ * @var
+ */
 var express = require('express');
+
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @var
+ * @namespace productRouter
+ */
 var router = express.Router();
 
 
+//Controllers
 var currency = require('../controllers/currency-api');
-
 var product_list = require('../controllers/product-list');
-
 var product = require('../controllers/product');
 
 
+
+/**
+ * route which is responsible for displaying product-list page.
+ * @name get/product_list~productRouter
+ * @function
+ * @memberof module:routes/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/:prodListName',product_list.product_list);
 
+/**
+ * route which is responsible for displaying product description page.
+ * @name get/product~productRouter
+ * @function
+ * @memberof module:routes/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/product/:id',product.product);
 
+/**
+ * route which is responsible for adding review in MongoDB.
+ * @name get/postReview~productRouter
+ * @function
+ * @memberof module:routes/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/newReview',product.postReview);
 
-
+/**
+ * route which is responsible for change currency via post request.
+ * @name get/currency~productRouter
+ * @function
+ * @memberof module:routes/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/test/currency',currency.currency);
 
 module.exports = router;

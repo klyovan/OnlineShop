@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: signup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: signup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var randomstring = require('randomstring');
+var mailer = require('../misc/mailer');
+var bcrypt = require('bcryptjs');
+
+var User = require ('../models/user');
+
+
+/**
+ * @module signup
+ */
+
+
+/**
+ * Middleware which is responsible for rendering registration form  .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
+module.exports.getSignup  = function (req, res) {
+    if(req.isAuthenticated()){
+        res.redirect('/users/profile');
+    }else
+        res.render('users/signup',{title: "SignUp"});
+};
+
+
+
+
+
+/**
+ * Middleware which is responsible for serving registration form and send verification mail to users mail .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
+module.exports.postSignup  = function (req,res){
+
+    var messages = [];
+    var {name,email,password,password2} = req.body;
+    var secretToken = randomstring.generate();
+    if(password !== password2){
+        messages.push({msg: 'Passwords do not match'});
+    }
+
+    if(password.length &lt; 8){
+        messages.push({msg: 'Password should be at least 8 characters'});
+    }
+
+    if (messages.length > 0 ){
+        res.render('users/signup',{title: "SignUp", messages:messages})
+    } else {
+        User.findOne({ email: email},function (err,user) {
+            if (err) {
+                return done(err);
+            }
+            if (user){
+                messages.push({msg: 'Email is already in use.'});
+                res.render('users/signup',{title: "SignUp", messages:messages});
+            }
+            else {
+
+                var newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password,
+                    secretToken: secretToken,
+                    active: false
+                });
+
+                bcrypt.genSalt(10,function (err,salt) {
+                    bcrypt.hash(newUser.password,salt,function (err,hash) {
+                        {
+                            if (err) throw err;
+
+                            //set password to hashed
+                            newUser.password = hash;
+
+                            newUser.save()
+                                .then(user => {
+
+                                    //compose email
+                                    var html = 'Hi there, &lt;br/> thank you for registering&lt;br>&lt;br>'+
+                                        'Click on the button to confirm your account.' +
+                                        '&lt;form action="http://127.0.0.1:3000/users/verify?q='+ secretToken +'" method="post">\n' +
+                                        '&lt;button type="submit" >Verify&lt;/button >\n' +
+                                        '&lt;/form> '+
+                                        '&lt;br> Have a nice day :)';
+                                    //send email
+                                    var mailOptions = {
+                                        from: 'OSF-Support ',
+                                        to: 'klyovan88@gmail.com', //TODO change on req.body.email
+                                        subject: 'Verification',
+                                        html: html
+                                    };
+                                    mailer.sendMail(mailOptions,function (err,data) {
+                                        if (err) console.log(err);
+                                        else console.log(data);
+                                    });
+
+                                    req.flash('success_msg','Please check your email!');
+                                    res.redirect('/users/signin');
+                                })
+                                .catch(err => console.log(err));
+                        }
+                    })
+                })
+            }
+        })
+    }
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-signup.html">signup</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 29 2019 12:00:19 GMT+0300 (GMT+03:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

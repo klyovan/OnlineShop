@@ -1,31 +1,41 @@
-var _         = require("underscore");
 
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
 var passport = require('passport');
-var bcrypt = require('bcryptjs');
-var flash = require('connect-flash');
-var isLoggedIn = require('../config/auth').ensureAuthenticated;
-var User = require ('../models/user');
-var passportSetup = require('../config/passportG');
-var randomstring = require('randomstring');
-var mailer = require('../misc/mailer');
+
+/**
+ * @module google-authentication
+ */
 
 
+
+/**
+ * Middleware which is responsible for getting profile from google account and ask the user permission for that using google strategy from passport module.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.getProfile  = passport.authenticate('google',{
     scope: ['https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email']
 });
 
+/**
+ * Middleware which is responsible for authorization using google account .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.redirectG  = passport.authenticate('google',{failureRedirect: '/users/signup'}),  (err, req, res, next) => {
     if (err.name === 'TokenError') {
         res.redirect('/users/signup'); // redirect them back to the login page
     } else {
         // Handle other errors here
     }
-},
-    (req, res) => { // On success, redirect back to '/'
-        res.redirect('/users/profile');
+};
 
+module.exports.redirectProfile  =   function(req, res)  { // On success, redirect back to '/'
+        res.redirect('/users/profile');
     };

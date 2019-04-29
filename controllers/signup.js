@@ -1,16 +1,24 @@
-var _         = require("underscore");
 var randomstring = require('randomstring');
 var mailer = require('../misc/mailer');
-var passportSetup = require('../config/passport');
 var bcrypt = require('bcryptjs');
-var flash = require('connect-flash');
-var passport = require('passport');
 
 var User = require ('../models/user');
 
+
+/**
+ * @module signup
+ */
+
+
+/**
+ * Middleware which is responsible for rendering registration form  .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
 module.exports.getSignup  = function (req, res) {
     if(req.isAuthenticated()){
-        //req.flash('error_msg','Bad request, you already logged in!');
         res.redirect('/users/profile');
     }else
         res.render('users/signup',{title: "SignUp"});
@@ -18,6 +26,15 @@ module.exports.getSignup  = function (req, res) {
 
 
 
+
+
+/**
+ * Middleware which is responsible for serving registration form and send verification mail to users mail .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
 module.exports.postSignup  = function (req,res){
 
     var messages = [];

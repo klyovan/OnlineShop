@@ -1,8 +1,23 @@
+
 var stripe = require("stripe")(
     "sk_test_n4mXFQ1xun1h5Wb4fxDOWrMQ00GnmEC5UX");
-// var Cart = require('../models/cart');
 
+//model
 var Order = require('../models/order');
+
+
+/**
+ * @module checkout
+ */
+
+/**
+ * Middleware which is responsible for payment using Stripe.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.stripe = function (req,res) {
     var cart = req.session.cart.totalPrice;
     stripe.charges.create({
@@ -34,6 +49,5 @@ module.exports.stripe = function (req,res) {
 
         }
     })
-
 
 };

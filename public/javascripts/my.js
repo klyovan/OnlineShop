@@ -1,13 +1,13 @@
 var check = function() {
-        if (document.getElementById('password').value ==
-            document.getElementById('password2').value) {
-            document.getElementById('message').style.color = 'green';
-            document.getElementById('message').innerHTML = 'matching';
-        } else {
-            document.getElementById('message').style.color = 'red';
-            document.getElementById('message').innerHTML = 'not matching';
-        }
-    };
+    if (document.getElementById('password').value ==
+        document.getElementById('password2').value) {
+        document.getElementById('message').style.color = 'green';
+        document.getElementById('message').innerHTML = 'matches';
+    } else {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = 'doesn`t matches';
+    }
+};
 
 
 
@@ -27,9 +27,6 @@ function topFunction() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
-
-
-
 
 
 
@@ -70,6 +67,9 @@ $(function(){
 
     });
 
+    $('.starrr').on('starrr:change', function(e, value){
+        ratingsField.val(value);
+    });
 });
 
 
@@ -95,7 +95,7 @@ jQuery(document).ready(function($){
             $("#rating-star-"+ix).toggleClass('btn-default');
         }
 
-    }));
-
-
+    })
+    )
 });
+

@@ -2,6 +2,19 @@ var _         = require("underscore");
 
 var Product = require ('../models/product');
 
+
+/**
+ * @module product-list
+ */
+
+/**
+ * Middleware which is responsible for rendering product list page.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.product_list = function (req, res) {
     var mainC = req.params.gender;
     var subcC = req.params.subC_Name;

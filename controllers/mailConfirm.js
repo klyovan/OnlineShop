@@ -1,11 +1,25 @@
 var flash = require('connect-flash');
 
+/**
+ *
+ * @module mailConfirm
+ */
+//model
 var User = require ('../models/user');
-module.exports.verify  = function (req,res,next) {
+
+/**
+ * Middleware which is responsible for user account mail confirmation  .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
+module.exports.verify  = function (req,res) {
     var secretToken = req.query.q;
 
     /**
-     * return user that have same  secret token
+     * return user that have same  secret token and activate user account via updating secretToken and active items
      */
     var user = User.findOneAndUpdate({'secretToken':secretToken},{$set:{active : true ,secretToken : ''}},{new:true},function (err,doc) {
         if (err) {
@@ -14,7 +28,7 @@ module.exports.verify  = function (req,res,next) {
 
     });
 
-    var userConfirm =User.findOne({'secretToken':secretToken});
+    var userConfirm = User.findOne({'secretToken':secretToken});
     if (!userConfirm){
         req.flash('error_msg','No user find!');
         res.redirect('/users/verify');

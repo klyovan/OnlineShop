@@ -14,7 +14,6 @@ var userSchema = new Schema({
     resetPasswordExpires: Date,
     Date: {type: Date, default: Date.now()}
 
-
 });
 
 userSchema.pre('save', function(next) {

@@ -4,14 +4,28 @@ var passport = require('passport');
 var crypto = require('crypto');
 var mailer = require('../misc/mailer');
 
-
+//Models
 var User = require ('../models/user');
 var Order = require ('../models/order');
 var Cart = require ('../models/cart');
-var ViewedProducts = require('../models/viewedProducts');
+
 
 var async = require('async');
 
+
+/**
+ * @module signin
+ */
+
+
+/**
+ * Middleware which is responsible for rendering login page.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.getSignIn  =function (req, res, next) {
     if (req.isAuthenticated()){
        // req.flash('error_msg','Bad request, you already logged in!');
@@ -20,6 +34,17 @@ module.exports.getSignIn  =function (req, res, next) {
     res.render('users/signin',{title: "SignIn"})
 };
 
+
+
+/**
+ * Middleware which is responsible for serving login form using passport module.
+ * @function
+ * @requires passport
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.postSignIn  = function(req,res,next){
     passport.authenticate('local',{
         successRedirect: '/users/profile',
@@ -28,10 +53,29 @@ module.exports.postSignIn  = function(req,res,next){
     })(req,res,next);
 };
 
+
+/**
+ * Middleware which is responsible for rendering profile page.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.profile = function(req,res){
     res.render('users/profile',{_     : _, title: "Profile",user: req.user});
 };
 
+
+/**
+ * Middleware which is responsible for rendering orders history page.
+ * @function
+ * @requires Order
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.orders = function(req,res){
     Order.find({user: req.user},function (err, orders) {
         if (err){
@@ -45,11 +89,17 @@ module.exports.orders = function(req,res){
         });
         res.render('users/orders',{_     : _, orders: orders, title: "Profile", user: req.user});
     });
-    // res.render('users/profile',{title: "Prodile",user: req.user});
-
 };
 
 
+/**
+ * Middleware which is responsible for logout user .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.logout =
 
     function (req,res) {
@@ -59,11 +109,31 @@ module.exports.logout =
     res.redirect('/users/signin');
 };
 
+
+/**
+ * Middleware which is responsible for rendering forgot password page.
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
 module.exports.getForgot = function (req,res) {
 
     res.render('users/forgot', {title:"Reset password", user: req.user });
 };
 
+
+/**
+ * Middleware which is responsible for serving forgot password form and send mail with token to user who has forgotten his password  .
+ * @function
+ * @requires async,crypto,User
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @requires mailer
+ * @return {undefined}
+ */
 module.exports.postForgot = function (req,res,next) {
 
     async.waterfall([
@@ -113,6 +183,14 @@ module.exports.postForgot = function (req,res,next) {
 };
 
 
+/**
+ * Middleware which is responsible for render reset password form and check if reset password token is active.
+ * @function
+ * @requires User
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
 module.exports.getReset = function(req, res) {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
         if (!user) {
@@ -127,7 +205,14 @@ module.exports.getReset = function(req, res) {
     });
 };
 
-
+/**
+ * Middleware which is responsible for serving reset password form and send mail to user with notice what password has been changed .
+ * @function
+ * @requires User, mailer
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @return {undefined}
+ */
 module.exports.postReset = function(req, res) {
             User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
                 if (!user) {
@@ -171,12 +256,3 @@ module.exports.postReset = function(req, res) {
             });
     };
 
-
-module.exports.google =
-
-    function (req,res) {
-        req.session.cart = null;
-        req.logout();
-        req.flash('success_msg','You are logged out');
-        res.redirect('/users/signin');
-    };

@@ -5,12 +5,18 @@ var Category = require('../models/category');
 
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * @module categories
  */
-module.exports.categories = function(req, res, next) {
+
+/**
+ * Middleware which is responsible for rendering main categories page and pass data to appropriate template .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+
+ * @return {undefined}
+ */
+module.exports.categories = function(req, res) {
     Category.findOne({'id':'mens'}, function (err,docs1) {
         if(err) return console.log(err);
 
@@ -22,7 +28,14 @@ module.exports.categories = function(req, res, next) {
     });
 };
 
+/**
+ * Middleware which is responsible for rendering subcategories page and pass data to appropriate template .
+ * @function
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
 
+ * @return {undefined}
+ */
 module.exports.subCategories = function (req, res) {
     var id = req.params.id;
     var sex = req.params.sex;

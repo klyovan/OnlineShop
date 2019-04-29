@@ -13,7 +13,6 @@ Sentry.init({ dsn: 'https://90e778590b4d474489c0402c8b260e74@sentry.io/1444061' 
 
 
 
-
 var categoryRouter = require('./routes/categories');
 var usersRouter = require('./routes/users');
 var productRouter = require('./routes/products');
