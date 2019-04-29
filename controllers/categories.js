@@ -55,7 +55,7 @@ module.exports.subCategories = function (req, res) {
             if(err) return console.log(err);
 
 
-            res.render('category/subcategories',{_     : _,title: "Subcategory", subCategory: docs,catId: catId})
+            res.render('category/subcategories',{_     : _,title: "Subcategory", subCategory: docs,catId: catId, breadcrumbs: req.breadcrumbs})
         });
     }
     else if (sex === "Womens"){
@@ -76,8 +76,9 @@ module.exports.subCategories = function (req, res) {
 
             if(err) return console.log(err);
 
-            res.render('category/subcategories',{_     : _,title: "Subcategory", subCategory: docs, catId:catId})
+            res.render('category/subcategories',{_     : _,title: "Subcategory", subCategory: docs, catId:catId, breadcrumbs: req.breadcrumbs})
         });
 
     }
 };
+

@@ -1,20 +1,16 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Home</li>
-    </ol>
-</nav>
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Library</li>
-    </ol>
-</nav>
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Library</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data</li>
-    </ol>
-</nav>
+<% if(breadcrumbs){%>
+<div class="container">
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background: transparent;">
+                <% _.each( breadcrumbs,function (crumb,index) { %>
+                <%if(index == breadcrumbs.length -1){%>
+                <li class="breadcrumb-item"><a href="<%= crumb.url%>"><%= crumb.name%></a></li>
+                <%}else{%>
+                <li class="breadcrumb-item active" aria-current="page"><%= crumb.name%></li>
+                <%}%><%})%>
+            </ol>
+        </nav>
+    </div>
+</div>
+<%}%>

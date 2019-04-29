@@ -23,7 +23,7 @@ module.exports.product_list = function (req, res) {
     Product.find({'primary_category_id': listName},function (err,docs) {
         if(err) return console.log(err);
 
-        res.render('product/product-list',{_     : _ ,title: "Product-list", products: docs,mainC: mainC, subC: subcC});
+        res.render('product/product-list',{_     : _ ,title: "Product-list", products: docs,mainC: mainC, subC: subcC, breadcrumbs: req.breadcrumbs});
     });
 
 };

@@ -53,6 +53,25 @@ app.use(passport.session());
 
 app.use(flash());
 
+
+//Breadcrumbs
+get_breadcrumbs = function(url) {
+    var rtn = [{name: "HOME", url: "/"}],
+        acc = "", // accumulative url
+        arr = url.substring(1).split("/");
+
+    for (i=0; i<arr.length; i++) {
+        acc = i !== arr.length-1 ? acc+"/"+arr[i] : null;
+        rtn[i+1] = {name: arr[i].toUpperCase(), url: acc};
+    }
+    return rtn;
+};
+
+app.use(function(req, res, next) {
+    req.breadcrumbs = get_breadcrumbs(req.originalUrl);
+    next();
+});
+
 //Global variables
 app.use(function (req,res,next) {
     res.locals.success_msg = req.flash('success_msg');

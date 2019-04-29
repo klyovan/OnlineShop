@@ -38,7 +38,7 @@ module.exports.product  = function (req, res) {
          Review.find({'productId':id},function (err,reviews) {
              if(err) return console.log(err);
 
-             res.render('product/product',{_     : _, title: "Product", products: docs, viewed: viewedProducts.generateArray(),reviews: reviews})
+             res.render('product/product',{_     : _, title: "Product", products: docs, viewed: viewedProducts.generateArray(),reviews: reviews, breadcrumbs: req.breadcrumbs})
 
          });
 

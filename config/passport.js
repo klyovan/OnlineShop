@@ -17,31 +17,6 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
-// module.exports = function (passport) {
-//     passport.use(
-//         new GoogleStrategy({
-//                 callbackURL: '/users/auth/google/redirect',
-//                 clientID: keys.google.clientID,
-//                 clientSecret:keys.google.clientSecret
-//             },function(accessToken, refreshToken, profile, done) {
-//                 User.findOne({googleID:profile.id}).then(function (currentUser) {
-//                     //if exist
-//                     if(currentUser){
-//                         done(null,currentUser);
-//                     }else{
-//                         new User ({
-//                             name: profile.displayName,
-//                             googleID: profile.id
-//                         }).save()
-//                             .then((newUser)=>{
-//                                 done(null,newUser);
-//                             })}
-//                 });
-//
-//             }
-//         )
-//     )
-// };
 
 module.exports = function (passport) {
     passport.use(
