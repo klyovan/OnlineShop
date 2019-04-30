@@ -20,7 +20,7 @@ var IndexRouter = require('./routes/index');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/OSF', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://Ihor:Aminif01@cluster0-nlsdk.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
     .then(() => console.log('MongoDB Connected')) //mongodb+srv://Ihor:Aminif01@cluster0-nlsdk.mongodb.net/test?retryWrites=true
     .catch(err => console.log(err));
 
