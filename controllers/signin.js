@@ -165,7 +165,7 @@ module.exports.postForgot = function (req,res,next) {
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n';
             //send email
             var mailOptions = {
-                from: 'OSF-Support ',
+                from: 'ECOMM-Support ',
                 to: 'klyovan88@gmail.com', //TODO change on req.body.email
                 subject: 'Password Reset',
                 html: html
@@ -242,7 +242,7 @@ module.exports.postReset = function(req, res) {
                 'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n';
             //send email
             var mailOptions = {
-                from: 'OSF-Support ',
+                from: 'ECOMM-Support ',
                 to: 'klyovan88@gmail.com', //TODO change on req.body.email
                 subject: 'Your password has been changed',
                 html: html

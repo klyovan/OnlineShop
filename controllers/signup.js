@@ -89,7 +89,7 @@ module.exports.postSignup  = function (req,res){
                                         '<br> Have a nice day :)';
                                     //send email
                                     var mailOptions = {
-                                        from: 'OSF-Support ',
+                                        from: 'ECOMM-Support ',
                                         to: 'klyovan88@gmail.com', //TODO change on req.body.email
                                         subject: 'Verification',
                                         html: html
